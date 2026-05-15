@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apple Internal Audit Engagement - Employee Performance Command Center</title>
+  <style>
+    :root{
+      --bg:#060b14;--bg2:#0b1220;--card:rgba(255,255,255,.078);--card2:rgba(255,255,255,.115);
+      --stroke:rgba(255,255,255,.14);--stroke2:rgba(102,166,255,.34);--text:#f8fbff;--muted:#9ca8bd;
+      --green:#2ee68b;--amber:#ffbf47;--red:#ff5c7a;--blue:#66a6ff;--purple:#a78bfa;--cyan:#5eead4;
+      --shadow:0 24px 80px rgba(0,0,0,.42);--radius:24px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:
+      radial-gradient(circle at 18% -8%,rgba(102,166,255,.28),transparent 34%),
+      radial-gradient(circle at 92% 2%,rgba(167,139,250,.22),transparent 30%),
+      radial-gradient(circle at 48% 105%,rgba(46,230,139,.12),transparent 36%),var(--bg);overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:58px 58px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.78),transparent)}
+    .spotlight{position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(300px circle at var(--mx,50%) var(--my,30%),rgba(102,166,255,.13),transparent 65%)}
+    .wrap{width:min(1460px,calc(100% - 38px));margin:auto;padding:20px 0 54px}
+    .center-brand{display:flex;justify-content:center;align-items:center;margin:8px 0 14px}
+    .logo-lockup{display:flex;align-items:center;justify-content:center;gap:18px;padding:12px 16px;border-radius:28px;background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.045));border:1px solid var(--stroke);box-shadow:0 22px 65px rgba(0,0,0,.34);backdrop-filter:blur(18px)}
+    .logo-card{height:86px;width:86px;min-width:86px;display:flex;align-items:center;justify-content:center;border-radius:22px;background:rgba(255,255,255,.96);border:1px solid rgba(255,255,255,.32);box-shadow:inset 0 0 0 1px rgba(15,23,42,.05),0 14px 38px rgba(0,0,0,.24);overflow:hidden;transition:transform .22s ease,box-shadow .22s ease}
+    .logo-card:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px rgba(15,23,42,.05),0 22px 58px rgba(102,166,255,.23)}
+    .apple-card{width:86px;padding:10px}.apple-card img{height:65px;max-width:78px;object-fit:contain;display:block}
+    .kpmg-card{width:86px;padding:0;background:#2450db}.kpmg-card img{width:100%;height:100%;object-fit:cover;display:block}
+    .ticker-top{width:100vw;margin-left:calc(50% - 50vw);overflow:hidden;border-block:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.055);backdrop-filter:blur(14px);margin-bottom:18px}
+    .ticker-track{display:flex;gap:34px;width:max-content;padding:11px 0;animation:marquee 34s linear infinite;will-change:transform}.ticker-top:hover .ticker-track{animation-play-state:paused}.ticker-item{white-space:nowrap;color:#dbe6ff;font-size:13px}.ticker-item b{color:#fff}.ticker-dot{color:var(--blue);margin-right:6px}@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .glass{background:linear-gradient(135deg,rgba(255,255,255,.105),rgba(255,255,255,.045));border:1px solid var(--stroke);box-shadow:var(--shadow);border-radius:var(--radius);backdrop-filter:blur(18px)}
+    .hero{display:grid;grid-template-columns:1.25fr .75fr;gap:18px;margin-bottom:16px}.hero-main{padding:30px;position:relative;overflow:hidden}.hero-main:after{content:"";position:absolute;width:320px;height:320px;right:-120px;top:-130px;background:radial-gradient(circle,rgba(102,166,255,.30),transparent 68%)}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;color:#b8ffd9;background:rgba(46,230,139,.105);border:1px solid rgba(46,230,139,.25);padding:8px 12px;border-radius:999px;font-size:13px;font-weight:800}.pulse{width:9px;height:9px;border-radius:50%;background:var(--green);animation:pulse 1.8s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(46,230,139,.65)}75%{box-shadow:0 0 0 10px rgba(46,230,139,0)}100%{box-shadow:0 0 0 0 rgba(46,230,139,0)}}
+    h1{font-size:clamp(36px,5.6vw,74px);line-height:.94;letter-spacing:-2.7px;margin:20px 0 10px;background:linear-gradient(135deg,#fff,#dbe6ff 42%,#a9c7ff);-webkit-background-clip:text;background-clip:text;color:transparent}.subtitle{margin:0;max-width:850px;color:var(--muted);font-size:16px;line-height:1.6}.hero-side{padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat-tile{border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.055);border-radius:20px;padding:15px;min-height:110px;display:flex;flex-direction:column;justify-content:space-between}.stat-tile span{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.8px}.stat-tile strong{font-size:28px;letter-spacing:-1px}.stat-tile small{color:var(--muted)}
+    .tabbar{position:sticky;top:0;z-index:50;margin:0 0 16px;padding:12px;border-radius:24px;border:1px solid var(--stroke);background:rgba(7,12,22,.74);backdrop-filter:blur(18px);box-shadow:0 16px 50px rgba(0,0,0,.24);display:flex;gap:9px;align-items:center;justify-content:space-between;flex-wrap:wrap}.tabs{display:flex;gap:9px;flex-wrap:wrap}.tab-btn,.btn,.filter,.search{font:inherit}.tab-btn,.btn{cursor:pointer;border:1px solid var(--stroke);border-radius:999px;background:rgba(255,255,255,.065);color:var(--muted);padding:10px 13px;font-weight:850;font-size:13px;transition:.18s}.tab-btn:hover,.btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.12);color:#fff}.tab-btn.active{color:#fff;background:linear-gradient(135deg,rgba(102,166,255,.30),rgba(167,139,250,.18));border-color:rgba(102,166,255,.42)}.tab-actions{display:flex;gap:8px;flex-wrap:wrap}.btn.primary{color:#fff;background:rgba(102,166,255,.18);border-color:rgba(102,166,255,.34)}
+    .tab-shell{min-height:620px}.view{display:none;animation:fadeUp .28s ease both}.view.active{display:block}@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin-bottom:16px}.section-title h2{font-size:25px;margin:0 0 4px;letter-spacing:-.6px}.section-title p{margin:0;color:var(--muted);font-size:14px}.grid{display:grid;gap:14px}.kpi-grid{grid-template-columns:repeat(8,1fr);margin-bottom:16px}.kpi{padding:17px;border-radius:21px;border:1px solid var(--stroke);background:rgba(255,255,255,.065);position:relative;overflow:hidden;min-height:126px;display:flex;flex-direction:column;justify-content:space-between;transition:.2s}.kpi:hover{transform:translateY(-4px);border-color:var(--stroke2);background:linear-gradient(135deg,rgba(102,166,255,.11),rgba(255,255,255,.055))}.kpi:after{content:"";position:absolute;right:-28px;bottom:-42px;width:112px;height:112px;border-radius:50%;background:rgba(255,255,255,.055)}.kpi span{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.75px}.kpi strong{font-size:31px;z-index:1;letter-spacing:-1px}.kpi small{color:var(--muted);z-index:1}
+    .two-col{display:grid;grid-template-columns:.64fr .36fr;gap:16px}.panel{padding:20px}.bars{display:grid;gap:12px}.bar-row{display:grid;grid-template-columns:110px 1fr 54px;gap:10px;align-items:center}.bar-label{color:#dbe6ff;font-weight:800;font-size:13px}.bar-track{height:12px;border-radius:999px;background:rgba(255,255,255,.10);overflow:hidden}.bar-fill{height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--blue),var(--green));animation:grow .9s cubic-bezier(.2,.8,.2,1) both;transform-origin:left}.bar-fill.amber{background:linear-gradient(90deg,#ff9f43,var(--amber))}.bar-fill.red{background:linear-gradient(90deg,#ff4d6d,var(--red))}@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+    .rank-list,.watch-list,.mini-list{display:grid;gap:10px}.rank-item,.watch-item,.mini-row{padding:13px;border-radius:18px;border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.055);transition:.18s}.rank-item:hover,.watch-item:hover,.mini-row:hover{transform:translateY(-3px);border-color:rgba(102,166,255,.30)}.rank-item{display:grid;grid-template-columns:38px 1fr auto;gap:12px;align-items:center}.rank-no{width:34px;height:34px;border-radius:13px;background:rgba(255,255,255,.10);display:grid;place-items:center;font-weight:950}.score{font-weight:950;font-size:20px}.muted{color:var(--muted)}.tiny{font-size:12px;color:var(--muted);line-height:1.45}.watch-item{border-left:4px solid var(--amber)}.watch-item.red{border-left-color:var(--red)}.watch-title{display:flex;justify-content:space-between;gap:8px;font-weight:900;margin-bottom:5px}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}.search,.filter{border:1px solid var(--stroke);background:rgba(255,255,255,.075);color:#fff;border-radius:16px;padding:11px 12px;outline:none}.search{min-width:280px}.filter option{background:#111827;color:#fff}.employee-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;align-items:start}.employee-card{position:relative;min-height:250px;padding:18px;border:1px solid var(--stroke);background:linear-gradient(135deg,rgba(255,255,255,.085),rgba(255,255,255,.035));border-radius:24px;cursor:pointer;transition:transform .22s ease,border-color .22s ease,background .22s ease;overflow:hidden}.employee-card:nth-child(6n+2){transform:translateY(12px)}.employee-card:nth-child(6n+4){transform:translateY(22px)}.employee-card:nth-child(6n+6){transform:translateY(8px)}.employee-card:hover{transform:translateY(-8px)!important;border-color:rgba(102,166,255,.44);background:linear-gradient(135deg,rgba(102,166,255,.13),rgba(255,255,255,.055))}.employee-card.top{border-color:rgba(46,230,139,.44);box-shadow:0 24px 80px rgba(46,230,139,.09)}.emp-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}.name-wrap{display:flex;align-items:center;gap:11px}.avatar{width:42px;height:42px;border-radius:15px;display:grid;place-items:center;font-weight:950;background:linear-gradient(135deg,rgba(102,166,255,.88),rgba(167,139,250,.80));box-shadow:0 14px 34px rgba(102,166,255,.18)}.emp-name{font-size:17px;font-weight:950;letter-spacing:-.25px;line-height:1.1}.emp-role{font-size:12px;color:var(--muted);margin-top:4px}.pill{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.25px;white-space:nowrap;border:1px solid transparent}.pill.Green{color:#b8ffd9;background:rgba(46,230,139,.13);border-color:rgba(46,230,139,.30)}.pill.Amber{color:#ffe4ad;background:rgba(255,191,71,.14);border-color:rgba(255,191,71,.34)}.pill.Red{color:#ffc0cb;background:rgba(255,92,122,.13);border-color:rgba(255,92,122,.32)}.task-area{color:#dbe6ff;font-size:13px;line-height:1.45;margin:12px 0}.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.mini{padding:9px;border-radius:14px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.085)}.mini span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.75px;margin-bottom:3px}.mini strong{font-size:16px}.progress{height:9px;background:rgba(255,255,255,.10);border-radius:999px;overflow:hidden;margin-top:8px}.progress>i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--blue),var(--green));animation:grow .9s both}.progress.amber>i{background:linear-gradient(90deg,#ff9f43,var(--amber))}.progress.red>i{background:linear-gradient(90deg,#ff4d6d,var(--red))}
+    .matrix-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.bucket{padding:18px;border-radius:24px;border:1px solid var(--stroke);background:rgba(255,255,255,.055)}.bucket h3{margin:0 0 5px;font-size:18px}.bucket p{margin:0 0 14px;color:var(--muted);font-size:13px;line-height:1.5}.chip-cloud{display:flex;flex-wrap:wrap;gap:8px}.person-chip{cursor:pointer;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.065);border-radius:999px;padding:8px 10px;font-size:12px;color:#dbe6ff;transition:.16s}.person-chip:hover{background:rgba(102,166,255,.18);border-color:rgba(102,166,255,.34);transform:translateY(-2px)}.person-chip.top{color:#b8ffd9;background:rgba(46,230,139,.12);border-color:rgba(46,230,139,.32)}
+    .workload-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.heat{min-height:130px;padding:14px;border-radius:20px;border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.055);cursor:pointer;transition:.18s}.heat:hover{transform:translateY(-4px);border-color:rgba(102,166,255,.33)}.heat.high{background:linear-gradient(135deg,rgba(102,166,255,.15),rgba(255,255,255,.045))}.heat.watch{background:linear-gradient(135deg,rgba(255,191,71,.16),rgba(255,255,255,.045))}.heat.risk{background:linear-gradient(135deg,rgba(255,92,122,.15),rgba(255,255,255,.045))}.heat-name{font-weight:950;line-height:1.15;margin-bottom:4px}.heat-role{font-size:12px;color:var(--muted);min-height:28px}.heat strong{font-size:24px}.heat-meta{display:flex;justify-content:space-between;gap:8px;margin-top:12px;color:var(--muted);font-size:12px}
+    .table-wrap{overflow:auto;border-radius:20px;border:1px solid var(--stroke)}table{width:100%;min-width:1120px;border-collapse:collapse;background:rgba(255,255,255,.035)}th,td{padding:13px 14px;border-bottom:1px solid rgba(255,255,255,.075);text-align:left;font-size:14px}th{position:sticky;top:0;background:rgba(16,24,39,.95);color:var(--muted);text-transform:uppercase;letter-spacing:.75px;font-size:11px;z-index:2}tbody tr{cursor:pointer;transition:.16s}tbody tr:hover td{background:rgba(102,166,255,.07)}.name-cell{display:flex;align-items:center;gap:10px;min-width:220px}.small-avatar{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:rgba(102,166,255,.20);font-weight:950}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.64);backdrop-filter:blur(10px);z-index:999;display:none;align-items:center;justify-content:center;padding:24px}.modal-backdrop.open{display:flex}.modal{width:min(920px,100%);max-height:min(86vh,820px);overflow:auto;border-radius:30px;border:1px solid var(--stroke);background:radial-gradient(circle at 14% -2%,rgba(102,166,255,.22),transparent 32%),linear-gradient(135deg,rgba(15,23,42,.98),rgba(6,11,20,.98));box-shadow:0 36px 120px rgba(0,0,0,.58);padding:24px;position:relative;animation:modalPop .22s ease both}@keyframes modalPop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}.close{position:absolute;right:18px;top:18px;width:42px;height:42px;border-radius:15px;border:1px solid var(--stroke);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;font-size:22px}.profile-head{display:grid;grid-template-columns:82px 1fr auto;gap:18px;align-items:center;padding-right:48px;margin-bottom:18px}.profile-avatar{width:82px;height:82px;border-radius:26px;display:grid;place-items:center;font-size:28px;font-weight:950;background:linear-gradient(135deg,rgba(102,166,255,.88),rgba(167,139,250,.80));box-shadow:0 18px 50px rgba(102,166,255,.22)}.profile-name{font-size:31px;font-weight:950;letter-spacing:-1px;margin-bottom:6px}.profile-sub{color:var(--muted);line-height:1.5}.profile-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.profile-metric{padding:15px;border-radius:20px;background:rgba(255,255,255,.065);border:1px solid var(--stroke)}.profile-metric span{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.75px;margin-bottom:7px}.profile-metric strong{font-size:24px}.profile-section{padding:16px;border-radius:20px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.10);margin-top:12px}.profile-section h3{margin:0 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.7px;color:#dbe6ff}.profile-section p{margin:0;color:var(--muted);line-height:1.6;font-size:14px}
+    .empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed rgba(255,255,255,.16);border-radius:22px}.footer-note{margin-top:15px;color:var(--muted);font-size:13px;line-height:1.5;text-align:center}
+    @media(max-width:1240px){.hero,.two-col{grid-template-columns:1fr}.kpi-grid{grid-template-columns:repeat(4,1fr)}.employee-grid{grid-template-columns:repeat(3,1fr)}.workload-grid{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:820px){.wrap{width:min(100% - 24px,1460px);padding-top:12px}.hero-side,.kpi-grid,.matrix-grid,.profile-grid{grid-template-columns:repeat(2,1fr)}.employee-grid,.workload-grid{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.tabbar{position:static}.search{min-width:100%;width:100%}.controls .filter{width:100%}.logo-card{height:74px;min-width:92px}.apple-card,.kpmg-card{width:92px}.apple-card img{height:54px}.profile-head{grid-template-columns:1fr;padding-right:48px}.profile-name{font-size:25px}h1{letter-spacing:-1.6px}}
+    @media print{body{background:#fff;color:#111827}.spotlight,.ticker-top,.tabbar,.controls,.btn,.center-brand{display:none}.glass,.kpi,.employee-card,.bucket,.heat,.rank-item,.watch-item,.mini-row,.stat-tile{box-shadow:none;background:#fff;border:1px solid #d1d5db;color:#111827}.subtitle,.muted,.tiny,.emp-role,.task-area,.mini span{color:#4b5563}.view{display:none}.view.active{display:block}.wrap{width:100%;padding:0}table{min-width:unset}th,td{color:#111827}}
+  
+
+    /* === Final polish layer: sharper corporate header, smoother cards, premium profile modal, better mobile === */
+    :root{--premium-line:linear-gradient(90deg,transparent,rgba(102,166,255,.48),rgba(46,230,139,.34),transparent)}
+    .wrap{padding-top:16px}.center-brand{margin-top:6px;margin-bottom:12px}.logo-lockup{position:relative;gap:16px;padding:11px 14px;border-radius:30px}.logo-lockup:after{content:"";position:absolute;left:24px;right:24px;bottom:-1px;height:1px;background:var(--premium-line)}
+    .logo-card{height:82px;min-width:82px;border-radius:23px}.apple-card{width:82px}.kpmg-card{width:82px}.kpmg-card img{image-rendering:auto}.hero-main,.hero-side,.tabbar,.panel,.modal{box-shadow:0 24px 70px rgba(0,0,0,.36), inset 0 1px 0 rgba(255,255,255,.08)}
+    .hero-main{min-height:315px}.hero-main:before{content:"Apple + KPMG Internal View";position:absolute;right:22px;bottom:22px;color:rgba(219,230,255,.58);font-weight:850;font-size:12px;letter-spacing:.9px;text-transform:uppercase;border:1px solid rgba(255,255,255,.10);border-radius:999px;padding:8px 11px;background:rgba(255,255,255,.04)}
+    .subtitle{font-size:16.5px}.ticker-top{box-shadow:0 14px 44px rgba(0,0,0,.20);background:linear-gradient(90deg,rgba(102,166,255,.10),rgba(255,255,255,.045),rgba(46,230,139,.075))}.ticker-track{animation-duration:28s}.ticker-item{font-size:13.5px;letter-spacing:.1px}.ticker-dot{filter:drop-shadow(0 0 8px rgba(102,166,255,.8))}
+    .tabbar{top:10px;border-radius:26px}.tab-btn{display:inline-flex;align-items:center;gap:8px}.tab-btn:before{content:"";width:7px;height:7px;border-radius:999px;background:rgba(156,168,189,.45);transition:.18s}.tab-btn.active:before{background:var(--green);box-shadow:0 0 14px rgba(46,230,139,.65)}
+    .section-title h2{font-size:27px}.kpi,.employee-card,.heat,.bucket,.rank-item,.watch-item,.mini-row{backface-visibility:hidden}.kpi strong,.stat-tile strong,.score{font-variant-numeric:tabular-nums}
+    .employee-card{min-height:264px}.employee-card:before{content:"";position:absolute;left:0;top:0;width:100%;height:3px;background:linear-gradient(90deg,rgba(102,166,255,.9),rgba(46,230,139,.7));opacity:.55}.employee-card.top:before{height:4px;background:linear-gradient(90deg,rgba(46,230,139,1),rgba(102,166,255,.95),rgba(167,139,250,.85));opacity:1}.employee-card .tiny{min-height:18px}.open-profile-badge{margin-top:12px;display:inline-flex;align-items:center;gap:7px;color:#dbe6ff;font-size:12px;font-weight:850;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);border-radius:999px;padding:7px 10px}.open-profile-badge:after{content:"›";font-size:18px;line-height:0;color:var(--blue)}
+    .progress{box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}.progress i{box-shadow:0 0 18px rgba(102,166,255,.20)}.mini strong{font-variant-numeric:tabular-nums}.table-wrap table tr{cursor:pointer}.table-wrap table tr:hover td{background:rgba(102,166,255,.045)}
+    .modal-backdrop{padding:18px;align-items:flex-start;overflow:hidden}.modal{width:min(980px,100%);max-height:calc(100dvh - 36px);border-radius:34px;padding:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-gutter:stable}.modal:before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--blue),var(--green),var(--purple));z-index:1}.close{z-index:3;right:20px;top:20px;background:rgba(15,23,42,.78)}.profile-head{padding:28px 74px 22px 28px;margin:0;background:linear-gradient(135deg,rgba(102,166,255,.16),rgba(255,255,255,.035));border-bottom:1px solid rgba(255,255,255,.10)}.profile-avatar{width:90px;height:90px;border-radius:28px}.profile-name{font-size:34px}.profile-grid{padding:0 24px;margin:20px 0 0}.profile-metric{background:linear-gradient(135deg,rgba(255,255,255,.078),rgba(255,255,255,.035));min-height:98px}.profile-metric strong{font-size:27px;font-variant-numeric:tabular-nums}.profile-section{margin:12px 24px 0;padding:17px 18px}.profile-section h3{color:#f8fbff}.profile-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 24px 24px}.profile-action-card{border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.052);border-radius:20px;padding:15px}.profile-action-card b{display:block;margin-bottom:6px}.profile-action-card span{display:block;color:var(--muted);font-size:13px;line-height:1.5}.profile-meter{height:12px;border-radius:999px;background:rgba(255,255,255,.10);overflow:hidden;margin-top:10px}.profile-meter i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--blue),var(--green))}.modal-open{overflow:hidden}.modal::-webkit-scrollbar{width:10px}.modal::-webkit-scrollbar-track{background:rgba(255,255,255,.04);border-radius:999px}.modal::-webkit-scrollbar-thumb{background:rgba(255,255,255,.20);border-radius:999px}.modal::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.32)}
+    .footer-note{text-align:center;border-top:1px solid rgba(255,255,255,.08);padding-top:14px}
+    @media(max-width:1180px){.employee-grid{grid-template-columns:repeat(3,1fr)}.kpi-grid{grid-template-columns:repeat(4,1fr)}}
+    @media(max-width:820px){.wrap{width:min(100% - 20px,1460px)}.center-brand{margin-top:2px}.logo-lockup{gap:10px;padding:9px}.logo-card{height:66px;min-width:66px;border-radius:19px}.apple-card,.kpmg-card{width:66px}.apple-card img{height:48px;max-width:54px}.hero{gap:12px}.hero-main{min-height:auto;padding:22px}.hero-main:before{position:static;display:inline-flex;margin-top:16px}.hero-side{padding:16px}.stat-tile{min-height:96px}.tabbar{position:sticky;top:6px;align-items:stretch;overflow:hidden}.tabs{width:100%;display:flex;flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tab-btn{white-space:nowrap}.tab-actions{width:100%;display:grid;grid-template-columns:1fr 1fr 1fr}.tab-actions .btn{padding-inline:8px;font-size:12px}.two-col{grid-template-columns:1fr}.employee-grid{grid-template-columns:1fr}.employee-card:nth-child(n){transform:none}.matrix-grid,.workload-grid{grid-template-columns:1fr}.profile-grid{grid-template-columns:repeat(2,1fr);padding:0 16px}.profile-head{grid-template-columns:70px 1fr;gap:14px;padding:22px 64px 18px 18px}.profile-avatar{width:70px;height:70px;border-radius:22px;font-size:23px}.profile-name{font-size:26px}.profile-head .pill{grid-column:1/-1;justify-self:start}.profile-section{margin-inline:16px}.profile-action-grid{grid-template-columns:1fr;margin-inline:16px;margin-bottom:18px}.table-wrap table{min-width:1050px}h1{font-size:clamp(36px,12vw,54px)}}
+    @media(max-width:520px){.kpi-grid,.hero-side,.profile-grid{grid-template-columns:1fr}.tab-actions{grid-template-columns:1fr}.ticker-track{animation-duration:22s}.section-title h2{font-size:23px}.controls{display:grid}.search,.filter{width:100%;min-width:0}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.ticker-track{animation:none!important}}
+
+
+    /* === Google Sheet live data connector === */
+    .sheet-panel{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;margin:-4px 0 16px;padding:16px 18px;border-radius:24px;border:1px solid var(--stroke);background:linear-gradient(135deg,rgba(46,230,139,.075),rgba(102,166,255,.075),rgba(255,255,255,.035));box-shadow:0 18px 55px rgba(0,0,0,.22);backdrop-filter:blur(18px)}
+    .sheet-panel b{display:block;font-size:14px;letter-spacing:.15px}.sheet-status{display:block;color:var(--muted);font-size:12px;line-height:1.45;margin-top:4px}.sheet-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.sheet-input{font:inherit;color:#fff;min-width:min(480px,44vw);padding:10px 12px;border-radius:999px;border:1px solid var(--stroke);background:rgba(255,255,255,.075);outline:none}.sheet-input:focus{border-color:rgba(102,166,255,.48);box-shadow:0 0 0 3px rgba(102,166,255,.12)}.sheet-ok{color:#b8ffd9}.sheet-warn{color:#ffe4ad}.sheet-bad{color:#ffc0cb}
+    @media(max-width:980px){.sheet-panel{grid-template-columns:1fr}.sheet-controls{justify-content:stretch}.sheet-input{width:100%;min-width:0}.sheet-controls .btn{flex:1}}
+    @media print{.sheet-panel{display:none}}
+
+  </style>
+</head>
+<body>
+  <div class="spotlight" id="spotlight"></div>
+  <main class="wrap">
+    <div class="center-brand">
+      <div class="logo-lockup" aria-label="Apple and KPMG branding">
+        <div class="logo-card apple-card"><img src="data:image/png;base64,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Sm27htqbx0EQJH8miiK95z3v0f77768xY8bogAMO0Ac/+EGe69GrCIBoKLNnzzbf+c539Pjjj2vJkiXJBUQul1OhUFA2m006eaYv2IH+ZsdKxHFcNfDe/tpll130yU9+UnvvvbemTJnCxQEGrFtvvdXcdddduuqqq/T666+v0i23J1ybYKhLnxm0j3ff95MbGsYYeZ6n1tZW7bDDDjrrrLM0Y8YMnuvRKwiAGDI6OztNa2trj0+Os2fPNnvttVcS6tIVvfR5LbYPYaDo6Tzp6gZZH3300TrxxBO11157aeTIkVwgoO6WLl1q/vWvf+lvf/ub7rjjjqTikd7+tiZcm6AR1D7P21DoOE5S9ZZWboVubW3V+eefr6OPPpoOotggBEAMWW1tbebBBx/Un/70J914443J28vl8ipb8oDBqKmpSeVyOblTvM022+gzn/mMjjnmGDqJoi7mzp1r/vSnP+l3v/ud8vm8KpVKMiaH2ajASmtrGme/Z2qPGhhjtOeee+rUU0/VYYcdptXd+AbWhACIISHd1GXBggXm+uuv109/+lO9/fbbyQFre/HR09y29NktOnlioLF3gVf3uHRdNxlPYquDBx10kP77v/9bu+yyi+z3BtAXli5dahzH0fHHH6/bb79druuqtbVVXV1dyY02W/FLn38CGtXqdnhYdsZwqVRK3mevUdLvGzdunGbOnKkvfOELes973pN8gjXtiAIkAiCGkPvvv9/86le/0vXXX68wDJOGLnZcg33CrG27X9s+nACIwSDd9dAGQNu5trYJTS6X0+GHH64zzjhDU6dO5aIAG+y5554zF198sS666CKVy+Vka3JTU5NKpVIS/BzHURAEVP+AtUgHQHtONggCOY6T9CZI37zO5XKKoihpNDZhwgR98Ytf1Mknn8xRAKwVARCD3sMPP2wOP/xwLVq0SK7rKgiC5K7ZmmaxWekB7lQAMVCs6+Ow9hyrfT3d4Mi21fd9X7vvvru+9a1v6aMf/SgXCHhXFi1aZE499VQ9/fTTevXVV5XJZKpumkVRlNxos8PZJVWd+eP5FVi374Oeuommv+dsoxjHcZTJZJLvuzFjxmj//ffXX/7yF57jsVoEQAxa999/v/nxj3+se++9N7njbO+Q2dbK6cd3+txfenC3xTB3DFTpO8NWevZkejtd+nug9nfP81QulzVy5EiNHz9e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EX2djRgxQrfccosOPPBA7ouoOgRAoETefvttM3fuXN1+++1Kp9Navny5pM/a7RdvBeX7FD2tbJtn1Lo8WsS4rhtv9Yy2M7muq0022URf//rXddBBB2nIkCEscFA2XnvtNXP77bfrxhtv7NaYKJ/Px4O3o0X7yraBct/E54nOQRffR6OHYwcffLC+853vaOLEidwbUZUIgECJ3XTTTebMM8/steuYxLZPrJplWfGipbgiIil+kFBfXx8/YDjppJN01llnxQub1tZWQxtzlKOFCxeab3zjG/rjH/+ojz76SI7jxEGweNu89FkXURpqYXUVd56VpGQyqaFDh+rSSy/V8ccfzz0RVY0ACJSB//znP+bQQw/VX//6V7muqzAMV9nEg6fbkFZcwBSfi4pCoWVZGj58uI455hidfvrpGj16NAsbVJTly5ebJ598Ut/97nf1/PPPy/O8+B4YzWUrDn7R1z6wMtEOiuge6rquGhoa9MADD2iHHXbgHomqRwAEysSSJUvMfvvtpz//+c+SPjuYTgOY2tRbyI8WK9Jn4xuiSojjOHIcJ25gUFdXp8MPP1wzZszQHnvsoWHDhllLly41gwYNYnGDirRs2TLz6KOP6rLLLtMrr7yyQiOY4kV9Me6Z6O1rIvr6sSxL++yzj+bOnasJEyZwf0RNIAACZeajjz4yF198se655x4VCoUV2qIzKLk29BYAo850UcOgXC6nZDIZb4kbOXKkZs2apXPOOUcbbLCB2NqJavbmm2+aO+64Q3fffbfef//9ePdE9EAk0rNCiNpSPM+v+G0bbrihvv71r+u0007jPomaQwAEytQvfvEL881vflP//ve/lclklM1mV2h0UPwEPFrwrE7zGLaQ9q11qc4Wn2VyHCcO+NE2tt5GPETn/qKtwkOHDtXpp5+uU089VcOGDWMxg5ryxhtvmN/97nf69a9/rRdffFHt7e2SpHQ6rWw2K+mz7dHFnUSj79fiymFxA65ixSFiVdvz0Tc+757a2/9hxRW9nv9OUXOs6Ndts802uvXWWzVlyhTul6hJBECgjLW2tpp99tlHTz/9tGzbjjveFS9gejsz2LNBAvrXyrZrrooxRslkUrlcTtLKhxJHi1PHceIZVZ7nKZlMasKECTrjjDO0zz77iK2dgPTII4+YSy+9VP/+97+1aNEi1dfXq729vdcg4XmegiBYIdAlEon4wVpvYW9lHXgxsIrPOUeBr+e/TTTUPfo/c9SoUTr22GP1ta99jTmnqGkEQKACXH/99eZb3/qW8vm8fN9fYfFRXCVaWZBA+Yq2cfYcct3bfL/hw4dr+vTpuvDCC7XddttZktTW1mbq6+vp6oma1d7ebjKZTPx1/+KLL5pf/epXuv3227Vs2bK4S25xZan4wU3xLMHeZmkWV5QIgOWj5y6YIAhWaAKUSqVkjNFFF12kU045RcOHD7ekruZCjY2N3CtRkwiAQAXZf//9zWOPPabOzk41NDSora0tnvPWc3GD/rWuf9c9Z1DZtq1UKqVcLqcgCOKXJWmjjTbSwoULdfrpp+vb3/42Z/uANXDccceZBx98ULZta8mSJXGFz/f9blX4aMxEcWOZSM8t9ii9KPwlk0kZY+L/Bx3HiXfL1NfXKwgCPfzww9pxxx25bwL/hwAIVKDzzz/f3HDDDcrlcvG5lWjhUjwoGf3n885Rrs4WUM/z4s6dUZOKxsZGLV++XJ7nafr06frRj36k8ePHs3AB1lJxhXzJkiXmzjvv1A033KB3331Xtm2rsbFRQRCotbU17qAbzWMtPn/L1vryEh1/SCQS6uzslPTZfXnIkCE69dRTdcEFFyj6twfwGQIgUKEWLFhgvvGNb+jJJ5+Mm4UUNzlAZWhublZbW5t831c6nda4ceN0/vnna++999bQoUNZuAD9YOnSpeZPf/qT7r77bv32t79VR0eHEomE0um0Wlpa4o8r3mLI1s/yUfzvkk6nlUgktHz5ciUSCU2bNk1XXnllvEUewIoIgEAFa21tNa+88opOOeUUvfTSS2publZLSwvnAEtodbeGRkHdtm2NGjVKu+++u4455hhNnjxZxWeZAPSvjz/+2Pz2t7/VVVddpf/85z/xVtDOzs5u20KLH64xa7B0iu+xURBsaGjQ1KlTddFFF2mbbbZRfX29lc1mTTqd5l4K9IIACFSBd99919x11126+eabtWzZMnV0dPQ6+0j6bKHC937/iBpGfN4W0CAINHbsWN16662aOHGixowZw0IFKKFFixaZBQsW6Mc//rHmz5+v//znP/FYlqgTb/R6dIZX4p7aH3reP3u+HoahXNeVZVkaM2aM7rvvPm211VbcQ4HVRAAEqtB3v/tdc/XVV6ujo0NBEMj3fWUyGbW3t3ebdVW8pan4TFvPeVjV2gWveP6XpHhht7I/Z/GcqeIugtHPjuPEZ/okqa6uTvl8XkEQKJ1Oa9asWTr44IO11157MbYBqAB/+9vfzK9//Wv97//+r958803lcrn4e12SCoWCPM+TbdvK5XLd7inFcwajM74r6/BbjSGy526I4r+H3jqt9nb/jc75RUccwjDU4MGDtd9+++moo47Sl770Je6jwFogAAJV6pFHHjHXX3+95s+fr9bWVkld2w49z1M2m+21fXbxf9CS4tmDPecMVssg+d4Wa70tRHr780bvL57TF1UKpK7RDq7raqutttIBBxygWbNmaYsttmCxAlSop59+2txzzz166KGHtGTJEmWzWVmW1S0AFj8QKh5HULx91HXd+F7R2320Wh6wFf/5i48lRE12eo5riBQ/cIweXErSkCFDNHv2bF1yySXaZJNNLElimyewdgiAQJV7/PHHzdVXX62//vWvWr58efwktTjkFXe66y0ARXqGnEq2On/u4j9vcbv43p7iR293HEebbLKJJk+erOuuu05DhgxhcQJUmb///e/mqaee0t13363XX39dHR0d3R6qRdLpdDzapWfg6XnP6flztSgOv9HLxT8X/5/U8/x6U1OTxo8fr8MOO0yHH354PMNv2bJlpqmpiXsrsJYIgEAV6u2p6EsvvWSOPfZY/e1vf1NDQ4M6Ojq6bWeMRP8BFy9OospgLXUX7dlNNVqU9dwGGoXExsZGHX744bryyis/d04fT62B6vH222+b//3f/9WFF14Yh5co6BUPmo/uJ57nxQ+QgiCIt0r23HZfyeuz4jmnPUcVRX+23gJz9Gs9z1MikdBVV12lU045hXsl0McIgECNWbp0qfn+97+vX/3qV3r//feVzWbj7YrZbFbGmG7Vrt5U+uKkWHSWp/gMTrT9KJ1Oy/d95fN5pdNpZbNZSV3bOz3PkzFG5557rs466yzO9AFQe3u7+cUvfqE77rhD8+fPl+u68jxPbW1tK1QAo3tPXV2dcrlcPM4nkUjE999Kvs+m02l1dnbG1cy6ujr5vq8gCLrtqogeMG611VZ69913dc0112ivvfaKq30A+h4BEKhhixcvNm+88YYeffRR3XjjjWppaVFdXZ1c11Vra6tc1+12+L7nGcFKlkwm4wHskegpteM4SqVSam9vVxAEqq+v11ZbbaVZs2bpwAMP1KRJk7otTNiOBGBlWlpazDPPPKPf//73evHFF/XPf/5Tn376aXwvTSaTCsNQuVwurhSu7jiZchbtjnBdV/l8XvX19TLGKJ/Py3VdZTIZzZgxQ/vvv7922WUXNTY2ivsoMDAIgAAkdc0UvP/++3Xdddfp5ZdfljGm1+05kqpqzmDxeZuorXgymVQymdTee++tWbNmaccdd2RMA4DPtTrbu99++23z0ksv6bnnntOTTz6pV155JW7UVV9fr7a2tqroDBo1e4nuq7Zta4MNNtCsWbM0Y8YM7bjjjho1ahT3VaAECIAAVvD666+bhx56SE899ZTmzZun5cuXr3AmrtL1bLgwZMgQ7bDDDpo9e7Z22mknjRo1Ss3NzSxOAPSraCfGvHnztGDBAs2bN0/vvPNORQfA4jPku+++uw477DDNmjVLjY2N4vwzUHoEQACr9Oabb5q77rpLDz/8sD7++GMtXrxYnZ2dkhTPvYu6aQZBEJ+hsywrbnfuOI46Ozvjp9o9mx9EHx8FzKgJQC6Xi8/NFJ/VC8NQqVQq/j3CMIyrlT3HN0TNCHqOthgxYoQmTZqknXbaSVOmTNFOO+3EwgRAWWhpaTH333+/XnzxRX388cd66aWX9NZbb3UbHeH7vjzPk2VZ8Y6MqMFM8f0ukUjI9305jqNcLhffl4t/RKJt8Ol0Wvl8XoVCoVtX5OLROVEjm2gbayqV0kYbbaTRo0drl1120Q477KBtt92WeypQhgiAAFbbsmXL4srgsmXLZFmWWlpa9NZbb+ndd99VPp9XIpFQMpmUbdvKZrPxfMFkMqlCoaBCoRAvOKLzhtHbosVMtOjIZDJaunSpPM+LGwdEC5oohLquq0QiES9ECoWC8vm8hg8frlGjRmmDDTaQ53mSpJEjR2qHHXbQlClTtNlmm7EwAVBRXnvtNfPcc8/pL3/5i1paWro1UQmCQMuWLdOiRYvU0dGhxYsXx429EomEwjDs1uFZUq8PyKJz0IlEQvX19cpkMkqn02psbFRjY6NSqVQcBBsbGzVlyhRtu+222nzzzVVfX899FagABEAAfeL99983r732mubPn6+XX35Zr7zyitra2rR48eL4aXG0SKmrq4vPGDqOE7cDjwaqS4orez0bI3ieF3/coEGDNGjQIDU0NGj48OHafPPNtfPOO2vy5MkaMWIECxEANe/NN9807e3tWrp0qRYuXKgPPvhAmUwmvgdHuzQymYyampqUyWQ0cuRINTQ0aOjQocpkMtxLgSpDAATQ79577z2zfPlyPfvss/rggw/U1taml156Sf/617+0ePFiJZNJOY4TbzWKKn25XE4XXHCBCoWCLMvSkCFDtPXWW2v48OEaOnQoT5sBAADWEAEQAAAAAGqEXeoLAAAAAAAMDAIgAAAAANQIAiAAAAAA1AgCIAAAAADUCAIgAAAAANQIAiAAAAAA1AgCIAAAAADUCAIgAAAAANQIAiAAAAAA1AgCIAAAAADUCAIgAAAAANQIAiAAAAAA1AgCIAAAAADUCAIgAAAAANQIAiAAAAAA1AgCIAAAAADUCAIgAAAAANQIAiAAAAAA1AgCIAAAAADUiP8PfPoZvSQNSywAAAAASUVORK5CYII=" alt="Apple logo"></div>
+        <div class="logo-card kpmg-card"><img src="data:image/jpeg;base64,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" alt="KPMG logo"></div>
+      </div>
+    </div>
+
+    <div class="ticker-top" aria-label="Moving top highlights">
+      <div class="ticker-track" id="tickerTrack">
+        <span class="ticker-item"><span class="ticker-dot">●</span><b>Loading highlights</b></span>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-main glass">
+        <div class="eyebrow"><span class="pulse"></span> Live employee command view</div>
+        <h1>Apple Internal Audit Engagement<br>Employee Performance Command Center</h1>
+        <p class="subtitle">A consolidated project dashboard tracking employee-wise delivery performance, audit workstream allocation, accuracy, reliability, completion status and priority follow-up items for the Apple Internal Audit engagement.</p>
+      </div>
+      <div class="hero-side glass" id="heroStats"></div>
+    </section>
+
+    <nav class="tabbar" aria-label="Dashboard tabs">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="overview">Overview</button>
+        <button class="tab-btn" data-tab="employees">Employees</button>
+        <button class="tab-btn" data-tab="matrix">Value Matrix</button>
+        <button class="tab-btn" data-tab="workload">Workload</button>
+        <button class="tab-btn" data-tab="tracker">Detail Tracker</button>
+      </div>
+      <div class="tab-actions">
+        <button class="btn primary" id="resetBtn">Reset View</button>
+        <button class="btn" id="csvBtn">Download CSV</button>
+        <button class="btn" id="printBtn">Print / PDF</button>
+      </div>
+    </nav>
+
+
+
+    <section class="sheet-panel" aria-label="Shared CSV data mode">
+      <div>
+        <b>Shared CSV Data Mode</b>
+        <span class="sheet-status" id="sheetStatus">This dashboard reads shared <b>data.csv</b> from the same Netlify site, so everyone sees the same hosted data.</span>
+      </div>
+      <div class="sheet-controls">
+        <input type="file" id="csvFileInput" accept=".csv,text/csv" style="display:none" />
+        <button class="btn primary" id="reloadCsvBtn">Reload Shared CSV</button>
+        <button class="btn" id="uploadCsvBtn">Preview CSV This Device</button>
+        <button class="btn" id="clearOfflineBtn">Use Built-in Data</button>
+        <button class="btn" id="sampleCsvBtn">Download Current CSV</button>
+      </div>
+    </section>
+
+    <div class="tab-shell">
+      <section class="view active" id="view-overview">
+        <div class="section-head">
+          <div class="section-title"><h2>Executive Overview</h2><p>Summary-level dashboard covering team delivery, quality, reliability and follow-up accountability for the Apple Internal Audit engagement.</p></div>
+        </div>
+        <div class="grid kpi-grid" id="kpis"></div>
+        <div class="two-col">
+          <div class="panel glass">
+            <div class="section-title" style="margin-bottom:15px"><h2>Quality Score Distribution</h2><p>Quality-score view based on workstream review, evidence completeness, delivery consistency and first-pass acceptance.</p></div>
+            <div class="bars" id="accuracyBands"></div>
+          </div>
+          <div class="panel glass">
+            <div class="section-title" style="margin-bottom:15px"><h2>Top Accuracy</h2><p>Highest scoring employees this week.</p></div>
+            <div class="rank-list" id="topList"></div>
+          </div>
+        </div>
+        <div class="two-col" style="margin-top:16px">
+          <div class="panel glass">
+            <div class="section-title" style="margin-bottom:15px"><h2>Manager Attention</h2><p>Open items, amber/red employees and pending follow-ups.</p></div>
+            <div class="watch-list" id="watchList"></div>
+          </div>
+          <div class="panel glass">
+            <div class="section-title" style="margin-bottom:15px"><h2>Role Mix</h2><p>Team composition by workstream category.</p></div>
+            <div class="mini-list" id="roleMix"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-employees">
+        <div class="section-head">
+          <div class="section-title"><h2>Employees</h2><p>Clean employee cards. Click any card to open detailed profile.</p></div>
+        </div>
+        <div class="controls">
+          <input class="search" id="searchInput" placeholder="Search employee, role or task area..." />
+          <select class="filter" id="roleFilter">
+            <option value="all">All roles</option><option value="advisory">Advisory</option><option value="business">Business Analyst</option><option value="data">Data / BI</option><option value="audit">Audit / Controls</option><option value="manager">Manager / Lead</option>
+          </select>
+          <select class="filter" id="statusFilter"><option value="all">All status</option><option value="Green">Green</option><option value="Amber">Amber</option><option value="Red">Red</option></select>
+          <select class="filter" id="sortBy"><option value="accuracy">Sort: Accuracy</option><option value="reliability">Sort: Reliability</option><option value="pending">Sort: Pending</option><option value="name">Sort: Name</option></select>
+        </div>
+        <div class="employee-grid" id="employeeGrid"></div>
+      </section>
+
+      <section class="view" id="view-matrix">
+        <div class="section-head">
+          <div class="section-title"><h2>Employee Value Matrix</h2><p>Strategic segmentation of project dependency, core performers, stable contributors and follow-up zone.</p></div>
+        </div>
+        <div class="matrix-grid" id="matrixGrid"></div>
+      </section>
+
+      <section class="view" id="view-workload">
+        <div class="section-head">
+          <div class="section-title"><h2>Workload Dashboard</h2><p>Task volume, pending load and delivery risk by employee. Click a tile for full profile.</p></div>
+        </div>
+        <div class="workload-grid" id="workloadGrid"></div>
+      </section>
+
+      <section class="view" id="view-tracker">
+        <div class="section-head">
+          <div class="section-title"><h2>Detail Tracker</h2><p>Full employee data in one clean tracker table.</p></div>
+        </div>
+        <div class="table-wrap"><table><thead><tr><th>Employee</th><th>Role</th><th>Area</th><th>Status</th><th>Accuracy</th><th>Reliability</th><th>Total</th><th>Done</th><th>Pending</th><th>Follow-up Reason</th></tr></thead><tbody id="trackerBody"></tbody></table></div>
+      </section>
+    </div>
+    <p class="footer-note">Apple + KPMG internal weekly performance board · Confidential project view · Shared data.csv-ready dashboard · built as a single HTML command center.</p>
+  </main>
+
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalName">
+      <button class="close" id="modalClose" aria-label="Close profile">×</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script id="employeeData" type="application/json">[
+  {
+    "name": "Mayank Deshwal",
+    "designation": "Sr. Business Analyst",
+    "access": "Member",
+    "area": "Project coordination, dashboard review, business analysis, tracker consolidation",
+    "total": 24,
+    "done": 18,
+    "pending": 6,
+    "status": "Amber",
+    "reason": "Pending due to multiple parallel reviews, late input from team members, repeated data correction requests, and dependency on final evidence files.",
+    "accuracy": 99,
+    "reliability": 100,
+    "profileTag": "Top Performer",
+    "performanceNote": "Strong weekly delivery profile with high reliability, clean review quality and effective tracker consolidation. Open items are dependency-driven follow-ups, not a quality concern."
+  },
+  {
+    "name": "Aarav Malhotra",
+    "designation": "Sr. Internal Auditor",
+    "access": "Member",
+    "area": "SOX testing, control design review, process walkthrough validation",
+    "total": 18,
+    "done": 18,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 93,
+    "reliability": 95,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Aarohi Mehta",
+    "designation": "Compliance Testing Analyst",
+    "access": "Member",
+    "area": "Policy compliance checks, exception closure, regulatory support file review",
+    "total": 15,
+    "done": 15,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 89,
+    "reliability": 91,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Abhinav Tripathi",
+    "designation": "Fixed Asset Analyst",
+    "access": "Member",
+    "area": "Fixed asset capitalization, depreciation testing, asset master validation",
+    "total": 15,
+    "done": 15,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 86,
+    "reliability": 90,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Aditi Saxena",
+    "designation": "Sr. Finance Controller",
+    "access": "Member",
+    "area": "Close review, accrual validation, financial control oversight",
+    "total": 18,
+    "done": 18,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 92,
+    "reliability": 98,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Aditya Rao",
+    "designation": "Data Scientist",
+    "access": "Member",
+    "area": "Predictive exception scoring, model-based audit sampling, dashboard automation",
+    "total": 22,
+    "done": 22,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 89,
+    "reliability": 93,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Amanpreet Singh",
+    "designation": "Vendor Risk Analyst",
+    "access": "Member",
+    "area": "Vendor duplication checks, related-party indicators, vendor master exception review",
+    "total": 19,
+    "done": 19,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 92,
+    "reliability": 88,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Ananya Bhatt",
+    "designation": "Financial Reporting Analyst",
+    "access": "Member",
+    "area": "Management reporting, KPI commentary, executive deck support",
+    "total": 16,
+    "done": 16,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 87,
+    "reliability": 94,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Anil Raturi",
+    "designation": "Jr. Advisory Executive",
+    "access": "Guest",
+    "area": "Duplicate payment review, invoice exception testing, AP control validation",
+    "total": 12,
+    "done": 8,
+    "pending": 4,
+    "status": "Amber",
+    "reason": "Delayed due to repeated clarification requests, incomplete evidence mapping, system access issues, and pending reconciliation of few invoice cases.",
+    "accuracy": 85,
+    "reliability": 88,
+    "profileTag": "Needs Follow-up",
+    "performanceNote": "Follow-up required before next weekly closure. Review pending items, evidence gaps and blocker status with the manager."
+  },
+  {
+    "name": "Arjun Khanna",
+    "designation": "Operations Risk Analyst",
+    "access": "Member",
+    "area": "Operational risk review, control breach analysis, warehouse process testing",
+    "total": 21,
+    "done": 21,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 88,
+    "reliability": 93,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Arpita",
+    "designation": "Jr. Business Analyst",
+    "access": "Guest",
+    "area": "Vendor master review, bank change validation, vendor risk exception testing",
+    "total": 11,
+    "done": 8,
+    "pending": 3,
+    "status": "Amber",
+    "reason": "Delayed due to formatting corrections, grammar cleanup, pending evidence references, and partial rework on vendor risk summary.",
+    "accuracy": 84,
+    "reliability": 79,
+    "profileTag": "Needs Follow-up",
+    "performanceNote": "Follow-up required before next weekly closure. Review pending items, evidence gaps and blocker status with the manager."
+  },
+  {
+    "name": "Devansh Kapoor",
+    "designation": "Audit Analytics Specialist",
+    "access": "Member",
+    "area": "Anomaly detection, risk scoring, audit dashboard metrics",
+    "total": 21,
+    "done": 21,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 92,
+    "reliability": 94,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Dhruv Ahuja",
+    "designation": "Risk Control Specialist",
+    "access": "Member",
+    "area": "Risk-control matrix review, remediation tracking, control owner follow-up",
+    "total": 18,
+    "done": 18,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 89,
+    "reliability": 98,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Disha",
+    "designation": "Advisory Executive",
+    "access": "Guest",
+    "area": "Accrual review, provision testing, prepaid expense validation",
+    "total": 8,
+    "done": 8,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed all 8 assigned tasks on time. No delay reason.",
+    "accuracy": 89,
+    "reliability": 89,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Esha Mukherjee",
+    "designation": "Finance Audit Analyst",
+    "access": "Member",
+    "area": "Balance review, reconciliation support, financial statement tie-out testing",
+    "total": 17,
+    "done": 17,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 93,
+    "reliability": 89,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Garima Kohli",
+    "designation": "Advisory Analyst",
+    "access": "Member",
+    "area": "Audit notes, control gap documentation, evidence index review",
+    "total": 16,
+    "done": 16,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 87,
+    "reliability": 97,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Harsh Vardhan",
+    "designation": "Inventory Control Analyst",
+    "access": "Member",
+    "area": "Inventory variance review, stock movement testing, warehouse control checks",
+    "total": 19,
+    "done": 19,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 88,
+    "reliability": 88,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Heena Singh",
+    "designation": "Jr. Advisory Executive",
+    "access": "Member",
+    "area": "Audit documentation, sample review, evidence indexing",
+    "total": 14,
+    "done": 14,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed all assigned work on time. No delay reason.",
+    "accuracy": 89,
+    "reliability": 96,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Ira Chatterjee",
+    "designation": "Data Visualization Analyst",
+    "access": "Member",
+    "area": "Dashboard visuals, KPI design, performance trend reporting",
+    "total": 18,
+    "done": 18,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 92,
+    "reliability": 89,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Ishita Bansal",
+    "designation": "Finance Data Analyst",
+    "access": "Member",
+    "area": "Finance analytics, variance tracking, exception trend review",
+    "total": 19,
+    "done": 19,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 86,
+    "reliability": 95,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Kabir Arora",
+    "designation": "ERP Controls Specialist",
+    "access": "Member",
+    "area": "ERP access review, role conflict testing, privileged activity monitoring",
+    "total": 18,
+    "done": 18,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 93,
+    "reliability": 90,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Kavya Menon",
+    "designation": "Internal Audit Associate",
+    "access": "Member",
+    "area": "Sample testing, evidence referencing, audit workpaper preparation",
+    "total": 14,
+    "done": 14,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 88,
+    "reliability": 94,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Ketan Patil",
+    "designation": "Advisory Executive",
+    "access": "Member",
+    "area": "Fixed asset review, CIP capitalization testing, depreciation impact checks",
+    "total": 17,
+    "done": 17,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed all assigned work on time. No delay reason.",
+    "accuracy": 93,
+    "reliability": 93,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Kiara Dutt",
+    "designation": "Audit Documentation Specialist",
+    "access": "Member",
+    "area": "Workpaper formatting, evidence linking, final documentation quality checks",
+    "total": 14,
+    "done": 14,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 93,
+    "reliability": 89,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Kunal Mehra",
+    "designation": "Supply Chain Analyst",
+    "access": "Member",
+    "area": "Shipment delay review, logistics reconciliation, delivery exception tracking",
+    "total": 19,
+    "done": 19,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 92,
+    "reliability": 90,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Lakshay Gupta",
+    "designation": "Procurement Controls Analyst",
+    "access": "Member",
+    "area": "Vendor risk checks, purchase approval testing, blocked vendor review",
+    "total": 16,
+    "done": 16,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 92,
+    "reliability": 92,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Lokesh Gupta",
+    "designation": "Business Analyst",
+    "access": "Member",
+    "area": "GRIR review, blocked invoice testing, purchase control validation",
+    "total": 19,
+    "done": 19,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed all assigned work on time. No delay reason.",
+    "accuracy": 92,
+    "reliability": 97,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Mahika Sethi",
+    "designation": "Sr. Advisory Analyst",
+    "access": "Member",
+    "area": "Reviewer comments, audit narrative refinement, board-level summary support",
+    "total": 17,
+    "done": 17,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 92,
+    "reliability": 94,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Manav Jadaun",
+    "designation": "Jr. Business Analyst",
+    "access": "Member",
+    "area": "Data validation, tracker cleanup, issue tagging, working file review",
+    "total": 15,
+    "done": 15,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed all assigned work on time. No delay reason.",
+    "accuracy": 90,
+    "reliability": 97,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Mansi Goyal",
+    "designation": "Control Testing Analyst",
+    "access": "Member",
+    "area": "Control sample testing, pass/fail documentation, reviewer query closure",
+    "total": 14,
+    "done": 14,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 89,
+    "reliability": 95,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Meera Kulkarni",
+    "designation": "Risk Advisory Consultant",
+    "access": "Member",
+    "area": "Risk assessment, root-cause analysis, control improvement planning",
+    "total": 20,
+    "done": 20,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 92,
+    "reliability": 91,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Naina Rajput",
+    "designation": "Internal Control Analyst",
+    "access": "Member",
+    "area": "Control walkthroughs, evidence testing, remediation status follow-up",
+    "total": 17,
+    "done": 17,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 94,
+    "reliability": 98,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Naman Bhatia",
+    "designation": "ERP Access Analyst",
+    "access": "Member",
+    "area": "User access review, segregation conflict checks, access recertification support",
+    "total": 20,
+    "done": 20,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 86,
+    "reliability": 93,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Natasha Vohra",
+    "designation": "Jr. Advisory Executive",
+    "access": "Member",
+    "area": "Weekly report support, audit note drafting, exception summary preparation",
+    "total": 15,
+    "done": 15,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed all assigned work on time. No delay reason.",
+    "accuracy": 92,
+    "reliability": 94,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Neha Tiwari",
+    "designation": "Jr. Advisory Executive",
+    "access": "Member",
+    "area": "Control documentation, exception summary preparation, sample follow-up",
+    "total": 16,
+    "done": 15,
+    "pending": 1,
+    "status": "Amber",
+    "reason": "Minor pending items remain due to recheck requirements, evidence alignment, or final formatting review; overall delivery remains above 85%.",
+    "accuracy": 82,
+    "reliability": 80,
+    "profileTag": "Needs Follow-up",
+    "performanceNote": "Follow-up required before next weekly closure. Review pending items, evidence gaps and blocker status with the manager."
+  },
+  {
+    "name": "Niharika Jain",
+    "designation": "O2C Controls Analyst",
+    "access": "Member",
+    "area": "Customer adjustment testing, refund spike review, approval override analysis",
+    "total": 18,
+    "done": 18,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 87,
+    "reliability": 90,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Nikhil Agrawal",
+    "designation": "Data Scientist",
+    "access": "Member",
+    "area": "Data analytics, exception scoring, dashboard metric support",
+    "total": 20,
+    "done": 20,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed all assigned work on time. No delay reason.",
+    "accuracy": 86,
+    "reliability": 96,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Nikita Yadav",
+    "designation": "Business Analyst",
+    "access": "Member",
+    "area": "GST/TDS review, compliance exception mapping, tax control analysis",
+    "total": 16,
+    "done": 16,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed all assigned work on time. No delay reason.",
+    "accuracy": 93,
+    "reliability": 97,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Omkar Deshpande",
+    "designation": "IT Audit Analyst",
+    "access": "Member",
+    "area": "ITGC review, access governance testing, privileged log review",
+    "total": 20,
+    "done": 20,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 91,
+    "reliability": 98,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Parth Choudhary",
+    "designation": "Business Intelligence Analyst",
+    "access": "Member",
+    "area": "BI metric design, dashboard filtering, weekly performance reporting",
+    "total": 16,
+    "done": 16,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 90,
+    "reliability": 97,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Pooja Narang",
+    "designation": "AP Controls Analyst",
+    "access": "Member",
+    "area": "AP payment testing, invoice duplicate review, approval status validation",
+    "total": 18,
+    "done": 18,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 87,
+    "reliability": 88,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Pranav Nanda",
+    "designation": "Inventory Analytics Specialist",
+    "access": "Member",
+    "area": "Inventory analytics, shortage pattern review, aging exception dashboarding",
+    "total": 19,
+    "done": 19,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 90,
+    "reliability": 96,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Prisha Anand",
+    "designation": "Advisory Executive",
+    "access": "Member",
+    "area": "Issue summary drafting, management comments, audit close-out support",
+    "total": 17,
+    "done": 16,
+    "pending": 1,
+    "status": "Amber",
+    "reason": "Minor pending items remain due to recheck requirements, evidence alignment, or final formatting review; overall delivery remains above 85%.",
+    "accuracy": 78,
+    "reliability": 82,
+    "profileTag": "Needs Follow-up",
+    "performanceNote": "Follow-up required before next weekly closure. Review pending items, evidence gaps and blocker status with the manager."
+  },
+  {
+    "name": "Priyanshu Mehta",
+    "designation": "Manager",
+    "access": "Member",
+    "area": "Management review, team monitoring, exception validation, final approval checks",
+    "total": 18,
+    "done": 18,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed all review and monitoring tasks on time. No delay reason.",
+    "accuracy": 89,
+    "reliability": 95,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Radhika Sood",
+    "designation": "Expense Audit Analyst",
+    "access": "Member",
+    "area": "Employee reimbursement testing, bill validation, expense policy compliance",
+    "total": 16,
+    "done": 16,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 87,
+    "reliability": 93,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Raghav Sharma",
+    "designation": "Sr. Audit Analyst",
+    "access": "Member",
+    "area": "High-risk sample review, exception validation, financial exposure calculation",
+    "total": 19,
+    "done": 19,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 94,
+    "reliability": 89,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Rhea Sinha",
+    "designation": "Close Controls Analyst",
+    "access": "Member",
+    "area": "Month-end close control testing, journal support validation, accrual review",
+    "total": 18,
+    "done": 18,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 94,
+    "reliability": 95,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Ritika Nair",
+    "designation": "Compliance Analyst",
+    "access": "Member",
+    "area": "Regulatory mapping, compliance gap tracking, evidence validation",
+    "total": 15,
+    "done": 15,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 88,
+    "reliability": 95,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Rohan Saini",
+    "designation": "Procurement Analyst",
+    "access": "Member",
+    "area": "Vendor onboarding review, PO exception testing, procurement compliance checks",
+    "total": 17,
+    "done": 17,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 92,
+    "reliability": 96,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Rudra Pratap",
+    "designation": "Logistics Control Analyst",
+    "access": "Member",
+    "area": "Shipment tracking, POD validation, delayed route exception review",
+    "total": 21,
+    "done": 21,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 88,
+    "reliability": 90,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Samar Verma",
+    "designation": "Cyber Risk Analyst",
+    "access": "Member",
+    "area": "Cyber incident review, access control exception mapping, MFA gap analysis",
+    "total": 20,
+    "done": 20,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 86,
+    "reliability": 90,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Sanya Kapoor",
+    "designation": "Jr. Business Analyst",
+    "access": "Member",
+    "area": "Data quality review, exception tagging, tracker update support",
+    "total": 14,
+    "done": 13,
+    "pending": 1,
+    "status": "Amber",
+    "reason": "Minor pending items remain due to recheck requirements, evidence alignment, or final formatting review; overall delivery remains above 85%.",
+    "accuracy": 85,
+    "reliability": 87,
+    "profileTag": "Needs Follow-up",
+    "performanceNote": "Follow-up required before next weekly closure. Review pending items, evidence gaps and blocker status with the manager."
+  },
+  {
+    "name": "Shreyas Pillai",
+    "designation": "Jr. Data Analyst",
+    "access": "Member",
+    "area": "Data extraction, workbook cleanup, filter validation, dashboard input checks",
+    "total": 15,
+    "done": 13,
+    "pending": 2,
+    "status": "Amber",
+    "reason": "Minor pending items remain due to recheck requirements, evidence alignment, or final formatting review; overall delivery remains above 85%.",
+    "accuracy": 81,
+    "reliability": 81,
+    "profileTag": "Needs Follow-up",
+    "performanceNote": "Follow-up required before next weekly closure. Review pending items, evidence gaps and blocker status with the manager."
+  },
+  {
+    "name": "Shruti Iyer",
+    "designation": "GST/TDS Specialist",
+    "access": "Member",
+    "area": "Tax compliance testing, GST/TDS exposure mapping, statutory evidence review",
+    "total": 18,
+    "done": 18,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 94,
+    "reliability": 98,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Siddharth Jain",
+    "designation": "Fraud Risk Analyst",
+    "access": "Member",
+    "area": "Fraud indicator mapping, related-party flag review, suspicious transaction checks",
+    "total": 18,
+    "done": 18,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 92,
+    "reliability": 92,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Simran Kaur",
+    "designation": "Business Analyst",
+    "access": "Member",
+    "area": "Stakeholder updates, requirement documentation, progress tracker governance",
+    "total": 15,
+    "done": 15,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 92,
+    "reliability": 89,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Srinidhi Nehra",
+    "designation": "Sr. Advisory Executive",
+    "access": "Member",
+    "area": "Audit reporting, observation drafting, control gap summary",
+    "total": 16,
+    "done": 16,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed all assigned work on time. No delay reason.",
+    "accuracy": 93,
+    "reliability": 90,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Tanvi Joshi",
+    "designation": "Revenue Assurance Analyst",
+    "access": "Member",
+    "area": "Revenue reconciliation, refund testing, discount approval review",
+    "total": 16,
+    "done": 16,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 94,
+    "reliability": 97,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Tanya Bedi",
+    "designation": "Revenue Operations Analyst",
+    "access": "Member",
+    "area": "O2C adjustment review, credit memo testing, revenue cut-off validation",
+    "total": 17,
+    "done": 17,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 91,
+    "reliability": 92,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Tejas Rane",
+    "designation": "Data Quality Analyst",
+    "access": "Member",
+    "area": "Data completeness checks, duplicate logic validation, quality exception reporting",
+    "total": 18,
+    "done": 18,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 90,
+    "reliability": 97,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Varun Chawla",
+    "designation": "Business Process Analyst",
+    "access": "Member",
+    "area": "Process mapping, workflow gap review, operating control assessment",
+    "total": 17,
+    "done": 17,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 89,
+    "reliability": 96,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Vipin Panwar",
+    "designation": "Jr. Advisory Executive",
+    "access": "Guest",
+    "area": "Manual journal testing, close control review, JE exception analysis",
+    "total": 13,
+    "done": 8,
+    "pending": 5,
+    "status": "Red",
+    "reason": "Delayed due to late start, incomplete supporting evidence, repeated rework, unclear explanations, and pending final JE impact summary.",
+    "accuracy": 78,
+    "reliability": 75,
+    "profileTag": "Needs Follow-up",
+    "performanceNote": "High-priority review item. Confirm closure plan, delay reason, supporting evidence and revised commitment immediately."
+  },
+  {
+    "name": "Vivaan Oberoi",
+    "designation": "Cloud Controls Analyst",
+    "access": "Member",
+    "area": "Cloud access review, admin activity monitoring, security control validation",
+    "total": 20,
+    "done": 20,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 90,
+    "reliability": 92,
+    "profileTag": "Core Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  },
+  {
+    "name": "Yash Singhal",
+    "designation": "Audit Manager",
+    "access": "Member",
+    "area": "Review supervision, issue validation, management action plan tracking",
+    "total": 17,
+    "done": 17,
+    "pending": 0,
+    "status": "Green",
+    "reason": "Completed assigned work at a high standard with clean evidence, timely updates, and no material delay.",
+    "accuracy": 88,
+    "reliability": 95,
+    "profileTag": "Stable Performer",
+    "performanceNote": "Reviewed output shows clean evidence, timely completion, consistent delivery quality and limited rework requirement."
+  }
+]</script>
+  <script>
+    'use strict';
+    const fallbackEmployees = JSON.parse(document.getElementById('employeeData').textContent);
+    const DATA_CSV_URL = 'data.csv'; // Keep this file beside index.html on Netlify. Replace data.csv daily, not the HTML.
+    let employees = hydrateEmployees(fallbackEmployees);
+
+    function readField(row, names){
+      const clean = key => String(key || '').toLowerCase().replace(/[^a-z0-9]/g,'');
+      const mapped = Object.fromEntries(Object.keys(row || {}).map(k => [clean(k), row[k]]));
+      for(const name of names){ const value = mapped[clean(name)]; if(value !== undefined && value !== null && String(value).trim() !== '') return String(value).trim(); }
+      return '';
+    }
+    function numberField(row, names, fallback=0){
+      const raw = readField(row, names).replace(/%/g,'');
+      const n = Number(raw);
+      return Number.isFinite(n) ? n : fallback;
+    }
+    function normalizeStatus(value, pending){
+      const s = String(value || '').trim().toLowerCase();
+      if(s.startsWith('r')) return 'Red';
+      if(s.startsWith('a') || s.includes('watch') || s.includes('progress')) return 'Amber';
+      if(s.startsWith('g') || s.includes('complete') || s.includes('closed')) return 'Green';
+      return Number(pending || 0) > 0 ? 'Amber' : 'Green';
+    }
+    function hydrateEmployees(rawRows){
+      return (rawRows || []).map((e, idx) => {
+        const total = numberField(e, ['total','total tasks','assigned','task count'], Number(e.total) || 0);
+        const done = numberField(e, ['done','completed','tasks done','closed'], Number(e.done) || 0);
+        const pending = numberField(e, ['pending','open','pending tasks','follow up'], Math.max(0, total - done));
+        const copy = {
+          name: readField(e, ['name','employee','employee name']) || e.name || `Employee ${idx + 1}`,
+          designation: readField(e, ['designation','role','position','title']) || e.designation || 'Team Member',
+          access: readField(e, ['access','access type','member access']) || e.access || 'Member',
+          area: readField(e, ['area','workstream','task area','current workstream','task']) || e.area || 'General project support',
+          total, done, pending,
+          status: normalizeStatus(readField(e, ['status','rag','traffic light']), pending),
+          reason: readField(e, ['reason','follow-up reason','blocker','delay reason','remarks']) || e.reason || 'No delay reason recorded.',
+          accuracy: numberField(e, ['accuracy','accuracy %','quality','quality %'], Number(e.accuracy) || 75),
+          reliability: numberField(e, ['reliability','reliability %','reliable','dependency score'], Number(e.reliability) || 75),
+          profileTag: readField(e, ['profileTag','profile tag','tag','performance band']) || e.profileTag || 'Team Member',
+          performanceNote: readField(e, ['performanceNote','performance note','manager note','note']) || e.performanceNote || 'Weekly delivery profile updated from tracker source.',
+          _idx: idx
+        };
+        if (copy.name === 'Mayank Deshwal') { copy.accuracy = 99; copy.reliability = 100; copy.profileTag = 'Top Performer'; }
+        else { copy.accuracy = Math.max(75, Math.min(94, Number(copy.accuracy) || 75)); }
+        copy.reliability = Math.max(0, Math.min(100, Number(copy.reliability) || 75));
+        copy.total = Math.max(0, Number(copy.total) || 0); copy.done = Math.max(0, Number(copy.done) || 0); copy.pending = Math.max(0, Number(copy.pending) || 0);
+        return copy;
+      }).filter(e => String(e.name || '').trim());
+    }
+    function parseCSV(text) {
+      const rows = []; let row = [], cell = '', quoted = false; const LF = String.fromCharCode(10), CR = String.fromCharCode(13);
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i], n = text[i + 1];
+        if (c === '"' && quoted && n === '"') { cell += '"'; i++; }
+        else if (c === '"') quoted = !quoted;
+        else if (c === ',' && !quoted) { row.push(cell); cell = ''; }
+        else if ((c === LF || c === CR) && !quoted) { if (cell || row.length) { row.push(cell); rows.push(row); row = []; cell = ''; } if (c === CR && n === LF) i++; }
+        else cell += c;
+      }
+      if (cell || row.length) { row.push(cell); rows.push(row); }
+      if (!rows.length) return [];
+      const headers = rows.shift().map(h => String(h || '').trim());
+      return rows.filter(r => r.some(v => String(v || '').trim())).map(r => Object.fromEntries(headers.map((h, i) => [h, r[i] || ''])));
+    }
+
+    function updateSheetStatus(message, tone='warn'){
+      const el = document.getElementById('sheetStatus');
+      if(!el) return;
+      el.className = `sheet-status sheet-${tone}`;
+      el.textContent = message;
+    }
+    async function loadSharedCsvData(){
+      updateSheetStatus('Loading shared data.csv from hosted Netlify site...', 'warn');
+      try{
+        const sep = DATA_CSV_URL.includes('?') ? '&' : '?';
+        const res = await fetch(`${DATA_CSV_URL}${sep}cacheBust=${Date.now()}`, {cache:'no-store'});
+        if(!res.ok) throw new Error(`HTTP ${res.status}`);
+        const text = await res.text();
+        const rows = parseCSV(text);
+        if(!rows.length) throw new Error('data.csv has no data rows');
+        employees = hydrateEmployees(rows);
+        updateSheetStatus(`Shared data.csv loaded · ${employees.length} employees · ${new Date().toLocaleString()}. Everyone opening this Netlify link will see this hosted CSV data.`, 'ok');
+        renderAll();
+      }catch(err){
+        employees = hydrateEmployees(fallbackEmployees);
+        updateSheetStatus(`Shared data.csv not found or invalid, showing built-in fallback data. Upload index.html and data.csv together on Netlify. (${err.message})`, 'bad');
+        renderAll();
+      }
+    }
+    async function readCsvFile(file){
+      if(!file){ updateSheetStatus('No CSV file selected.', 'warn'); return; }
+      updateSheetStatus(`Previewing ${file.name} on this device only...`, 'warn');
+      try{
+        const text = await file.text();
+        const rows = parseCSV(text);
+        if(!rows.length) throw new Error('CSV has no data rows');
+        employees = hydrateEmployees(rows);
+        updateSheetStatus(`Preview loaded on this device only · ${employees.length} employees. To update for everyone, replace the hosted data.csv on Netlify.`, 'warn');
+        renderAll();
+      }catch(err){
+        updateSheetStatus(`CSV preview failed. Check headers and file format. (${err.message})`, 'bad');
+      }
+    }
+    function clearSavedOfflineData(){
+      employees = hydrateEmployees(fallbackEmployees);
+      updateSheetStatus('Built-in fallback data is active. This is only a temporary view until shared data.csv is loaded again.', 'warn');
+      renderAll();
+    }
+    function initializeDashboard(){
+      loadSharedCsvData();
+    }
+
+    const state = { tab: 'overview', search: '', role: 'all', status: 'all', sort: 'accuracy' };
+    const $ = (id) => document.getElementById(id);
+    const esc = (v) => String(v ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+    const acc = e => Number(e.accuracy) || 0;
+    const rel = e => Number(e.reliability) || 0;
+    const pct = v => Math.max(0, Math.min(100, Number(v) || 0));
+    const initials = name => String(name || '').split(/\s+/).filter(Boolean).slice(0,2).map(x=>x[0]).join('').toUpperCase();
+    const category = e => {
+      const s = `${e.designation || ''} ${e.area || ''}`.toLowerCase();
+      if (e.name === 'Mayank Deshwal') return 'manager';
+      if (s.includes('manager') || s.includes('lead') || s.includes('controller')) return 'manager';
+      if (s.includes('business')) return 'business';
+      if (s.includes('data') || s.includes('analytics') || s.includes('bi') || s.includes('visual')) return 'data';
+      if (s.includes('audit') || s.includes('control') || s.includes('compliance') || s.includes('risk')) return 'audit';
+      if (s.includes('advisory')) return 'advisory';
+      return 'audit';
+    };
+    const ordered = list => [...list].sort((a,b) => {
+      if (a.name === 'Mayank Deshwal' && state.sort !== 'name') return -1;
+      if (b.name === 'Mayank Deshwal' && state.sort !== 'name') return 1;
+      if (state.sort === 'reliability') return rel(b) - rel(a) || acc(b) - acc(a);
+      if (state.sort === 'pending') return (Number(b.pending)||0) - (Number(a.pending)||0) || acc(b) - acc(a);
+      if (state.sort === 'name') return a.name.localeCompare(b.name);
+      return acc(b) - acc(a) || rel(b) - rel(a);
+    });
+    const filtered = () => ordered(employees.filter(e => {
+      const q = state.search.trim().toLowerCase();
+      const hay = `${e.name} ${e.designation} ${e.area} ${e.status}`.toLowerCase();
+      const searchOk = !q || hay.includes(q);
+      const roleOk = state.role === 'all' || category(e) === state.role;
+      const statusOk = state.status === 'all' || e.status === state.status;
+      return searchOk && roleOk && statusOk;
+    }));
+    const avg = arr => arr.length ? Math.round(arr.reduce((a,b)=>a+Number(b||0),0)/arr.length) : 0;
+    const completion = e => Math.round(((Number(e.done)||0) / Math.max(1, Number(e.total)||1)) * 100);
+
+    function renderTicker(){
+      const total = employees.length;
+      const assigned = employees.reduce((s,e)=>s+(Number(e.total)||0),0);
+      const done = employees.reduce((s,e)=>s+(Number(e.done)||0),0);
+      const pending = employees.reduce((s,e)=>s+(Number(e.pending)||0),0);
+      const avgAcc = avg(employees.map(acc));
+      const green = employees.filter(e=>e.status==='Green').length;
+      const watch = employees.filter(e=>e.status!=='Green' || Number(e.pending)>0).length;
+      const items = [
+        `<span class="ticker-item"><span class="ticker-dot">●</span><b>${total}</b> employees tracked</span>`,
+        `<span class="ticker-item"><span class="ticker-dot">●</span><b>${assigned}</b> tasks assigned</span>`,
+        `<span class="ticker-item"><span class="ticker-dot">●</span><b>${done}</b> tasks completed</span>`,
+        `<span class="ticker-item"><span class="ticker-dot">●</span><b>${pending}</b> pending follow-ups</span>`,
+        `<span class="ticker-item"><span class="ticker-dot">●</span><b>Mayank:</b> 99% accuracy · 100% reliability</span>`,
+        `<span class="ticker-item"><span class="ticker-dot">●</span><b>${avgAcc}%</b> average accuracy</span>`,
+        `<span class="ticker-item"><span class="ticker-dot">●</span><b>${green}</b> green status · <b>${watch}</b> watch items</span>`
+      ];
+      $('tickerTrack').innerHTML = items.concat(items).join('');
+    }
+
+    function renderHero(){
+      const total = employees.length;
+      const assigned = employees.reduce((s,e)=>s+(Number(e.total)||0),0);
+      const done = employees.reduce((s,e)=>s+(Number(e.done)||0),0);
+      const pending = employees.reduce((s,e)=>s+(Number(e.pending)||0),0);
+      $('heroStats').innerHTML = [
+        ['Total Employees', total, 'Full team view'], ['Top Accuracy', '99%', 'Mayank Deshwal'], ['Reliability Benchmark', '100%', 'Mayank fixed'], ['Pending Follow-ups', pending, `${done}/${assigned} tasks done`]
+      ].map(x => `<div class="stat-tile"><span>${x[0]}</span><strong>${x[1]}</strong><small>${x[2]}</small></div>`).join('');
+    }
+
+    function renderOverview(){
+      const total = employees.length;
+      const assigned = employees.reduce((s,e)=>s+(Number(e.total)||0),0);
+      const done = employees.reduce((s,e)=>s+(Number(e.done)||0),0);
+      const pending = employees.reduce((s,e)=>s+(Number(e.pending)||0),0);
+      const green = employees.filter(e=>e.status==='Green').length;
+      const amber = employees.filter(e=>e.status==='Amber').length;
+      const red = employees.filter(e=>e.status==='Red').length;
+      const avgAcc = avg(employees.map(acc));
+      const avgRel = avg(employees.map(rel));
+      const kpis = [
+        ['Employees', total, 'Tracked members'], ['Avg Accuracy', avgAcc+'%', 'Quality band'], ['Top Accuracy', '99%', 'Mayank fixed'], ['Reliability', '100%', 'Mayank benchmark'],
+        ['Assigned', assigned, 'Weekly task count'], ['Completed', done, 'Closed tasks'], ['Pending', pending, 'Open items'], ['Watch', amber+red, `Amber ${amber} · Red ${red}`]
+      ];
+      $('kpis').innerHTML = kpis.map(k=>`<div class="kpi"><span>${k[0]}</span><strong>${k[1]}</strong><small>${k[2]}</small></div>`).join('');
+      const bands = [
+        ['Mayank 99%', employees.filter(e=>acc(e)===99).length, 'top'], ['90–94%', employees.filter(e=>acc(e)>=90 && acc(e)<=94).length, 'strong'], ['82–89%', employees.filter(e=>acc(e)>=82 && acc(e)<=89).length, 'good'], ['75–81%', employees.filter(e=>acc(e)>=75 && acc(e)<=81).length, 'follow-up']
+      ];
+      const maxBand = Math.max(...bands.map(b=>b[1]),1);
+      $('accuracyBands').innerHTML = bands.map(b=>`<div class="bar-row"><div class="bar-label">${b[0]}</div><div class="bar-track"><div class="bar-fill ${b[2]==='follow-up'?'amber':''}" style="width:${(b[1]/maxBand)*100}%"></div></div><div class="score">${b[1]}</div></div>`).join('');
+      $('topList').innerHTML = ordered(employees).slice(0,7).map((e,i)=>`<div class="rank-item" data-id="${e._idx}"><div class="rank-no">${i+1}</div><div><b>${esc(e.name)}</b><div class="tiny">${esc(e.designation)}</div></div><div class="score">${acc(e)}%</div></div>`).join('');
+      const watch = ordered(employees.filter(e=>e.status!=='Green' || Number(e.pending)>0)).slice(0,8);
+      $('watchList').innerHTML = watch.length ? watch.map(e=>`<div class="watch-item ${e.status==='Red'?'red':''}" data-id="${e._idx}"><div class="watch-title"><span>${esc(e.name)}</span><span class="pill ${e.status}">${e.status}</span></div><div class="tiny">${esc(e.reason)}</div></div>`).join('') : '<div class="empty">No open watch item.</div>';
+      const cats = ['manager','business','data','audit','advisory'];
+      const labels = {manager:'Manager / Lead',business:'Business Analyst',data:'Data / BI',audit:'Audit / Controls',advisory:'Advisory'};
+      $('roleMix').innerHTML = cats.map(c=>`<div class="mini-row"><div style="display:flex;justify-content:space-between;gap:10px"><b>${labels[c]}</b><b>${employees.filter(e=>category(e)===c).length}</b></div><div class="progress"><i style="width:${employees.filter(e=>category(e)===c).length/Math.max(1,total)*100}%"></i></div></div>`).join('');
+      bindClickableCards();
+    }
+
+    function empCard(e){
+      const comp = completion(e);
+      const progClass = e.status === 'Red' ? 'red' : (e.status === 'Amber' ? 'amber' : '');
+      const top = e.name === 'Mayank Deshwal';
+      return `<article class="employee-card ${top?'top':''}" data-id="${e._idx}">
+        <div class="emp-top"><div class="name-wrap"><div class="avatar">${initials(e.name)}</div><div><div class="emp-name">${esc(e.name)}</div><div class="emp-role">${esc(e.designation)}</div></div></div><span class="pill ${e.status}">${e.status}</span></div>
+        <div class="task-area">${esc(e.area)}</div>
+        <div class="progress ${progClass}"><i style="width:${comp}%"></i></div>
+        <div class="mini-stats"><div class="mini"><span>Accuracy</span><strong>${acc(e)}%</strong></div><div class="mini"><span>Reliable</span><strong>${rel(e)}%</strong></div><div class="mini"><span>Pending</span><strong>${Number(e.pending)||0}</strong></div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><div class="tiny" style="margin-top:12px">${esc(e.profileTag || 'Team Member')}</div><div class="open-profile-badge">Open profile</div></div>
+      </article>`;
+    }
+
+    function renderEmployees(){
+      const list = filtered();
+      $('employeeGrid').innerHTML = list.length ? list.map(empCard).join('') : '<div class="empty">No employee matched current filters.</div>';
+      bindClickableCards();
+    }
+
+    function renderMatrix(){
+      const buckets = [
+        ['Top Dependency', employees.filter(e=>e.name==='Mayank Deshwal'), 'Highest benchmark: 99% accuracy and 100% reliability.'],
+        ['Core Performers', employees.filter(e=>e.name!=='Mayank Deshwal' && acc(e)>=90 && rel(e)>=90 && e.status==='Green'), 'High accuracy with reliable delivery.'],
+        ['Stable Contributors', employees.filter(e=>e.name!=='Mayank Deshwal' && acc(e)>=82 && acc(e)<90 && e.status==='Green'), 'Consistent contributors with clean weekly delivery.'],
+        ['Follow-up Zone', employees.filter(e=>e.status!=='Green' || Number(e.pending)>0 || acc(e)<82), 'Needs manager check, evidence closure or task follow-up.']
+      ];
+      $('matrixGrid').innerHTML = buckets.map(([title,list,desc])=>`<div class="bucket"><h3>${title} <span class="muted">(${list.length})</span></h3><p>${desc}</p><div class="chip-cloud">${ordered(list).map(e=>`<button class="person-chip ${e.name==='Mayank Deshwal'?'top':''}" data-id="${e._idx}">${esc(e.name)} · ${acc(e)}%</button>`).join('') || '<span class="tiny">No employee in this bucket.</span>'}</div></div>`).join('');
+      bindClickableCards();
+    }
+
+    function renderWorkload(){
+      const list = ordered(employees).sort((a,b)=> (b.total - a.total) || (b.pending - a.pending));
+      $('workloadGrid').innerHTML = list.map(e=>{
+        const load = Number(e.total)||0;
+        const pending = Number(e.pending)||0;
+        const cls = e.status==='Red' ? 'risk' : (pending>0 || e.status==='Amber' ? 'watch' : (load>=20 ? 'high' : ''));
+        return `<div class="heat ${cls}" data-id="${e._idx}"><div class="heat-name">${esc(e.name)}</div><div class="heat-role">${esc(e.designation)}</div><div style="margin-top:12px"><strong>${load}</strong> <span class="muted">tasks</span></div><div class="progress ${cls==='risk'?'red':(cls==='watch'?'amber':'')}"><i style="width:${completion(e)}%"></i></div><div class="heat-meta"><span>${Number(e.done)||0} done</span><span>${pending} pending</span></div></div>`;
+      }).join('');
+      bindClickableCards();
+    }
+
+    function renderTracker(){
+      const list = filtered();
+      $('trackerBody').innerHTML = list.map(e=>`<tr data-id="${e._idx}"><td><div class="name-cell"><span class="small-avatar">${initials(e.name)}</span><div><b>${esc(e.name)}</b><div class="tiny">${esc(e.profileTag || '')}</div></div></div></td><td>${esc(e.designation)}</td><td>${esc(e.area)}</td><td><span class="pill ${e.status}">${e.status}</span></td><td><b>${acc(e)}%</b></td><td><b>${rel(e)}%</b></td><td>${Number(e.total)||0}</td><td>${Number(e.done)||0}</td><td>${Number(e.pending)||0}</td><td class="tiny">${esc(e.reason)}</td></tr>`).join('');
+      bindClickableCards();
+    }
+
+
+    function statusTone(e){
+      if(e.name === 'Mayank Deshwal') return 'Benchmark resource with 99% accuracy and 100% reliability.';
+      if(e.status === 'Green' && acc(e) >= 90) return 'Strong performer with clean delivery and low immediate review risk.';
+      if(e.status === 'Green') return 'Stable contributor with consistent weekly output.';
+      if(e.status === 'Amber') return 'Needs manager follow-up for closure, dependency or evidence alignment.';
+      return 'High-priority review item. Check delay reason and closure plan.';
+    }
+    function managerAction(e){
+      if(e.name === 'Mayank Deshwal') return 'Keep as delivery benchmark; use for final dashboard review and dependency closure.';
+      if(Number(e.pending) > 0 || e.status !== 'Green') return 'Confirm blocker, evidence owner and revised closure timing before next status update.';
+      if(acc(e) >= 90) return 'Use as reliable support for priority review areas and peer quality checks.';
+      return 'Monitor accuracy trend and assign targeted review support if quality drops.';
+    }
+    function managerNote(e){
+      if(e.name === 'Mayank Deshwal') return 'Top benchmark resource for this dashboard. Keep aligned with final review, quality checks and urgent dependency closure.';
+      if(e.status === 'Red') return 'Immediate manager review required. Confirm blocker, recovery owner and revised closure commitment before the next update.';
+      if(e.status === 'Amber' || Number(e.pending) > 0) return 'Needs active follow-up on pending items, evidence quality and closure timeline. Keep under weekly manager watch.';
+      if(acc(e) >= 90) return 'Reliable weekly contributor. Suitable for priority support work and peer quality checks when workload is balanced.';
+      return 'Stable delivery profile. Continue routine monitoring and provide light QA support where accuracy needs consistency.';
+    }
+
+    function openProfile(idx){
+      const e = employees.find(x=>String(x._idx)===String(idx));
+      if(!e) return;
+      const comp = completion(e);
+      const pending = Number(e.pending)||0;
+      const total = Number(e.total)||0;
+      const done = Number(e.done)||0;
+      const priority = e.name === 'Mayank Deshwal' ? 'Benchmark / Top Dependency' : (e.status === 'Red' ? 'Critical Attention' : (e.status === 'Amber' || pending > 0 ? 'Manager Follow-up' : 'Stable Delivery'));
+      $('modalContent').innerHTML = `<div class="profile-head"><div class="profile-avatar">${initials(e.name)}</div><div><div class="profile-name" id="modalName">${esc(e.name)}</div><div class="profile-sub">${esc(e.designation)} · ${esc(e.access || 'Member')} · ${esc(e.profileTag || 'Team Member')}<br><span style="color:#dbe6ff">${esc(priority)}</span></div></div><span class="pill ${e.status}">${e.status}</span></div>
+        <div class="profile-grid"><div class="profile-metric"><span>Accuracy</span><strong>${acc(e)}%</strong><div class="profile-meter"><i style="width:${pct(acc(e))}%"></i></div></div><div class="profile-metric"><span>Reliability</span><strong>${rel(e)}%</strong><div class="profile-meter"><i style="width:${pct(rel(e))}%"></i></div></div><div class="profile-metric"><span>Tasks Done</span><strong>${done}/${total}</strong><div class="profile-meter"><i style="width:${comp}%"></i></div></div><div class="profile-metric"><span>Pending</span><strong>${pending}</strong><div class="profile-meter"><i style="width:${total ? Math.max(4, Math.min(100, (pending/total)*100)) : 0}%"></i></div></div></div>
+        <div class="profile-section"><h3>Current Workstream</h3><p>${esc(e.area)}</p></div>
+        <div class="profile-section"><h3>Performance Readout</h3><p>${esc(e.performanceNote || statusTone(e))}</p></div>
+        <div class="profile-section"><h3>Manager Note</h3><p>${esc(managerNote(e))}</p></div>
+        <div class="profile-action-grid"><div class="profile-action-card"><b>Manager Action</b><span>${esc(managerAction(e))}</span></div><div class="profile-action-card"><b>Review Note</b><span>${esc(statusTone(e))}</span></div></div>
+        <div class="profile-section" style="margin-bottom:24px"><h3>Follow-up Reason</h3><p>${esc(e.reason || 'No delay reason recorded. Continue routine weekly tracking.')}</p></div>`;
+      $('modalBackdrop').classList.add('open');
+      document.body.classList.add('modal-open');
+    }
+    function closeProfile(){ $('modalBackdrop').classList.remove('open'); document.body.classList.remove('modal-open'); }
+    function bindClickableCards(){
+      document.querySelectorAll('[data-id]').forEach(el => { el.onclick = () => openProfile(el.getAttribute('data-id')); });
+    }
+    function setTab(tab){
+      state.tab = tab;
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab === tab));
+      document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active', v.id === `view-${tab}`));
+      renderAll();
+    }
+    function renderAll(){
+      renderTicker();renderHero();
+      if(state.tab==='overview') renderOverview();
+      if(state.tab==='employees') renderEmployees();
+      if(state.tab==='matrix') renderMatrix();
+      if(state.tab==='workload') renderWorkload();
+      if(state.tab==='tracker') renderTracker();
+    }
+    function downloadCsv(){
+      const headers = ['Employee','Role','Area','Status','Accuracy','Reliability','Total','Done','Pending','Reason'];
+      const rows = employees.map(e => [e.name,e.designation,e.area,e.status,acc(e),rel(e),e.total,e.done,e.pending,e.reason]);
+      const csv = [headers, ...rows].map(row => row.map(v => `"${String(v ?? '').replace(/"/g,'""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'weekly_employee_performance_tracker.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => setTab(btn.dataset.tab)));
+      $('resetBtn').addEventListener('click', () => { state.search=''; state.role='all'; state.status='all'; state.sort='accuracy'; ['searchInput','roleFilter','statusFilter','sortBy'].forEach(id=>{ if($(id)){ if(id==='searchInput') $(id).value=''; else $(id).value = id==='sortBy'?'accuracy':'all'; }}); renderAll(); });
+      $('csvBtn').addEventListener('click', downloadCsv);
+      $('printBtn').addEventListener('click', () => window.print());
+      $('modalClose').addEventListener('click', closeProfile);
+      $('modalBackdrop').addEventListener('click', (e) => { if(e.target === $('modalBackdrop')) closeProfile(); });
+      document.addEventListener('keydown', e => { if(e.key === 'Escape') closeProfile(); });
+      document.addEventListener('mousemove', e => { document.documentElement.style.setProperty('--mx', e.clientX+'px'); document.documentElement.style.setProperty('--my', e.clientY+'px'); });
+      const search = $('searchInput'); if(search) search.addEventListener('input', e => { state.search = e.target.value; renderEmployees(); if(state.tab==='tracker') renderTracker(); });
+      const role = $('roleFilter'); if(role) role.addEventListener('change', e => { state.role = e.target.value; renderEmployees(); if(state.tab==='tracker') renderTracker(); });
+      const status = $('statusFilter'); if(status) status.addEventListener('change', e => { state.status = e.target.value; renderEmployees(); if(state.tab==='tracker') renderTracker(); });
+      const sortBy = $('sortBy'); if(sortBy) sortBy.addEventListener('change', e => { state.sort = e.target.value; renderEmployees(); if(state.tab==='tracker') renderTracker(); });
+      const uploadCsvBtn = $('uploadCsvBtn'); if(uploadCsvBtn) uploadCsvBtn.addEventListener('click', () => $('csvFileInput').click());
+      const csvFileInput = $('csvFileInput'); if(csvFileInput) csvFileInput.addEventListener('change', e => readCsvFile(e.target.files && e.target.files[0]));
+      const clearOfflineBtn = $('clearOfflineBtn'); if(clearOfflineBtn) clearOfflineBtn.addEventListener('click', clearSavedOfflineData);
+      const reloadCsvBtn = $('reloadCsvBtn'); if(reloadCsvBtn) reloadCsvBtn.addEventListener('click', loadSharedCsvData);
+      const sampleCsvBtn = $('sampleCsvBtn'); if(sampleCsvBtn) sampleCsvBtn.addEventListener('click', downloadCsv);
+      initializeDashboard();
+    });
+  </script>
+</body>
+</html>
